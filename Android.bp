@@ -1,0 +1,31 @@
+package {
+    default_applicable_licenses: ["external_libmnl_license"],
+}
+
+license {
+    name: "external_libmnl_license",
+    visibility: [":__subpackages__"],
+    license_kinds: ["SPDX-license-identifier-LGPL-2.1"],
+    license_text: ["LICENSE"],
+}
+
+cc_library_shared {
+    name: "libmnl",
+    srcs: [
+        "src/attr.c",
+        "src/callback.c",
+        "src/nlmsg.c",
+        "src/socket.c",
+    ],
+    export_include_dirs: ["include"],
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-gnu-pointer-arith",
+    ],
+    vendor_available: true,
+
+    // b/479773959: Restrict visibility once Soong support is available.
+    // For now, use __subpackages__ to unblock development.
+    visibility: ["//vendor:__subpackages__"],
+}
